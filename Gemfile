@@ -46,6 +46,7 @@ gem 'bootsnap', require: false
 gem 'rubocop', '>= 1.0', '< 2.0'
 
 # rpec package for testing
+gem 'factory_bot', '~> 6.2.1'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

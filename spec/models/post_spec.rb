@@ -24,4 +24,13 @@ RSpec.describe Post, type: :model do
     subject.title = -5
     expect(subject).to_not be_valid
   end
+
+  # for testing methods
+  describe '#post_counts' do
+    it 'returns the most recent 2 posts' do
+      post = Post.new(comments: [Comment.new, Comment.new])
+      post.save
+      expect(post.recent_comments).to eq(post.comments.order(created_at: :desc).limit(2))
+    end
+  end
 end
