@@ -3,6 +3,7 @@ class Like < ApplicationRecord
   belongs_to :post
   before_save :like_counter
 
+  # likes counter
   def like_counter
     post.update(likes_counter: post.likes.all.length)
   end
