@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <h3>Comment:</h3>
-                    <% post.recent_comments do |comment, index| %>
+                    <% post.recent_comments.each do |comment| %>
                     <div class="post-comments">
                         <span><%= comment.author.name %> </span>
                         <span><%= comment.text %> </span>

@@ -19,6 +19,6 @@ class PostsController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     # handle flash
     flash[:alert] = 'Post not found'
-    redirect_to user_posts_path
+    redirect_to user_posts_path(@user)
   end
 end
