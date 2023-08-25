@@ -13,32 +13,48 @@
  *= require_tree .
  *= require_self
  */
- main {
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
     margin: 3% 5%;
-  }
-  
-  .user-box {
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.user-box {
     display: flex;
     margin-bottom: 1rem;
-  }
-  
-  .user-container {
+}
+
+.user-container {
     margin: auto;
     display: grid;
     grid-template-columns: 30% 70%;
     margin-top: 10px;
-  }
-  
-  .user-photo {
-    width: 300px;
+}
+
+.user-photo {
     border-radius: 5px;
-  }
-  
-  .user-photo img {
+    width: 300px;
+}
+
+.user-photo img {
     width: 100%;
-  }
-  
-  .user-details {
+}
+
+.user-details {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -47,51 +63,50 @@
     border-radius: 5px;
     text-align: center;
     padding: 10px;
-  }
-  
-  .user-name {
+}
+
+.user-name {
     font-size: 24px;
     font-weight: bold;
     text-align: left;
-  }
-  
-  .bio {
+}
+
+.bio {
     font-weight: 100;
     font-size: small;
-  }
-  
-  .posts-count {
+}
+
+.posts-count {
     font-size: 14px;
-  }
-  
-  .user-post {
+}
+
+.user-post {
     border: black solid 2px;
     margin-bottom: 1rem;
-  }
-  
-  .post {
+}
+
+.post {
     display: flex;
     flex-direction: column;
-  }
-  
-  .post-interactions {
+}
+
+.post-interactions {
     display: flex;
     font-size: small;
     gap: 5px;
     justify-content: flex-end;
-  }
-  
-  .pagination {
+}
+
+.pagination {
     display: flex;
     justify-content: center;
-  }
-  
-  #pagination {
+}
+
+#pagination {
     margin: 1rem auto;
     padding: 1rem;
-  }
-  
-  #back-btn {
+}
+
+#back-btn {
     margin-bottom: 1rem;
-  }
-  
+}
