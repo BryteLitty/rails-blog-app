@@ -11,14 +11,14 @@
     <p><%= @post.text %></p>
     <h3>Comments:</h3>
 
-    <%# <% @recent_comments.comments.each do |comment| %> %>
-    <% @recent_comments.each do |comment| %>
-
-    <div class="post-comments">
-        <span><%= comment.author.name %>:</span>
-        <span><%= comment.text %></span>
-    </div>
+    <% if @recent_comments.present? %>
+      <% @recent_comments.each do |comment| %>
+        <div class="post-comments">
+          <span><%= comment.author.name %>:</span>
+          <span><%= comment.text %></span>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No comments yet.</p>
     <% end %>
 </main>
-
-<span>Comments: <%= @post.comments_counter %>,</span>
