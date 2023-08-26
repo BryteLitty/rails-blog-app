@@ -1,1 +1,38 @@
-<h1>Here is a list of posts for a given user <%= @user_id %></h1>
+<main>
+    <a href="<%= users_path() %>">
+        <button id="back-btn">-</button>
+    </a>
+
+    <ul>
+        <a href="<%= users_path(@user)%>">
+            <div class="user-box">
+                <%= render partial: 'shared/user_photo', locals: { user: @user } %>
+                <%= render partial: 'shared/user_details', locals: { user: @user } %>
+            </div>
+        </a>
+
+        <% @posts.each do |post| %>
+            <a href="<%= user_posts_path(@user, post)%>">
+                <div class="user-post">
+                    <div class="post">
+                        <h3>Post<%= raw "#" + post.id.to_s %></h3>
+                        <p><%= post.text %></p>
+                        <div class="post-interactions">
+                            <span>Comments: <%= post.comments_counter %></span>
+                            <span>Likes: <%= post.likes_counter %></span>
+                        </div>
+                    </div>
+                    <h3>Comment:</h3>
+                    <% post.recent_comments.each do |comment| %>
+                    <div class="post-comments">
+                        <span><%= comment.author.name %> </span>
+                        <span><%= comment.text %> </span>
+                    </div>
+                    <% end %>
+                </div>
+            </a>
+        <% end %>
+        
+    </ul>
+</main>
+

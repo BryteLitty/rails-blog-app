@@ -1,0 +1,13 @@
+<div class="user-details">
+
+    <div class="user-name">
+        <%= user.name %>
+        <p class="bio"><%= user.bio %></p>
+    </div>
+
+
+    <div class="post-counts">
+        <%= pluralize(user.posts_counter, "Post")%>
+    </div>
+
+</div>

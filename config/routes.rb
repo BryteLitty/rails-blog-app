@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  #roots route
+  root 'users#index'
+
   # users route
   get '/users', to: 'users#index'
   get '/users/:id', to: 'users#show', as: 'user'

@@ -1,1 +1,26 @@
-<h1>Users ID: <%= @user_id %></h1>
+<main>
+    <a href="<%= user_posts_path(@user) %>">
+        <button id="back-btn">-</button>
+    </a>
+
+    <div class="user-box">
+        <%= render partial: '/shared/user_photo', locals: { user: @user } %>
+        <%= render partial: '/shared/user_details', locals: { user: @user } %>
+    </div>
+
+    <div class="bio">
+        <h3>Bio</h3>
+        <p> <%= @user.bio %> </p>
+    </div>
+
+    <% @recent_posts.each do |post| %>
+        <div class="post">
+            <h3> Post <%= raw "#" post.id.to_s %> </h3>
+            <p> <%= post.text %> </p>
+            <div class="post-interactions">
+                <span>Comments: <%= post.comment_counter%>, </span>
+                <span>Likes: <%= post.likes_counter%> </span>
+            </div>
+        </div>
+    <% end %>
+</main>
