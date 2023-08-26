@@ -1,7 +1,9 @@
 class Like < ApplicationRecord
   belongs_to :author, class_name: 'User'
   belongs_to :post
-  before_save :like_counter
+
+  after_save :likes_counter
+  after_destroy :likes_counter
 
   # likes counter
   def like_counter
