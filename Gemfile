@@ -61,6 +61,7 @@ group :development, :test do
   gem 'rspec-rails'
 
   gem 'devise'
+  gem 'cancancan'
 
   # # Capybara, the library that allows us to interact with the browser using Ruby
   # gem 'capybara'
