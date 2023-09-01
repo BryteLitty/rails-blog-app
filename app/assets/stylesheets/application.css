@@ -48,6 +48,7 @@ a {
 .d-flex {
   display: flex;
 }
+
 .user-photo {
   border-radius: 5px;
   width: 300px;
