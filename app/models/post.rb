@@ -1,20 +1,34 @@
 class Post < ApplicationRecord
+  # Associations
+  belongs_to :author, class_name: 'User'
   has_many :comments
   has_many :likes
-  belongs_to :author, class_name: 'User'
 
-  before_create :post_count
-  after_create :update_comments_counter
+  # Attributes
+  attribute :title, :string
+  attribute :text, :text
+  attribute :comments_counter, :integer, default: 0
+  attribute :likes_counter, :integer, default: 0
 
+  # Callbacks
+  after_save :increase_user_posts_counter
+  after_destroy :decrease_user_posts_counter
+
+  # Validations
   validates :title, presence: true, length: { maximum: 250 }
-  validates :comments_counter, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :likes_counter, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :comments_counter, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+  validates :likes_counter, numericality: { greater_than_or_equal_to: 0, only_integer: true }
 
-  def recent_comments
-    comments.order(created_at: :desc).limit(5)
+  # Methods
+  def increase_user_posts_counter
+    author.increment!(:posts_counter)
   end
 
-  def post_count
-    author.update(posts_counter: author.posts.all.count)
+  def decrease_user_posts_counter
+    author.decrement!(:posts_counter)
+  end
+
+  def recent_comments
+    comments.includes(:author).order(created_at: :asc).limit(5)
   end
 end

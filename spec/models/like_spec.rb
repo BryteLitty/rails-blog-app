@@ -7,7 +7,6 @@ RSpec.describe Like, type: :model do
       bio: 'Developer',
       posts_counter: 5
     )
-    user.save
 
     post = Post.new(
       title: 'My first post',
