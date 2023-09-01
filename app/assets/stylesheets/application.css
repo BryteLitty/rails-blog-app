@@ -45,6 +45,9 @@ a {
   margin-top: 10px;
 }
 
+.d-flex {
+  display: flex;
+}
 .user-photo {
   border-radius: 5px;
   width: 300px;
@@ -109,4 +112,16 @@ a {
 
 #back-btn {
   margin-bottom: 1rem;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.v-hidden {
+  visibility: hidden;
 }
