@@ -1,42 +1,44 @@
-<main>
-<a href="<%= users_path() %>">
-    <button id="back-btn">⬅</button>
-</a>
-<ul>
-    <a href="<%= user_path(@user) %>">
-        <div class="user-box">
-            <%= render partial: 'shared/user_details', locals: { user: @user } %>
+<div class='all-posts'>
+    <div class= 'name-img'> 
+         <img src=<%=@post.photo%> alt='Profile' class = 'cover-img'  />
+        <div class='name' >
+           <p> <%= @post.name %></h3></p>
+           <p class='nmb-posts'>Number of posts: <%= @post.posts_counter %> </p>
         </div>
-    </a>
-    <% @posts.each do |post|%>
-        <a href="<%= user_post_path(@user, post) %>">
-            <div class="user-post">
-                <div class="post">
-                    <h3>Post <%= raw "#" + post.id.to_s %></h3>
-                    <h2><%= post.title %></h2>
-                    <p><%= truncate(post.text, length: 100) %></p>
-                    <div class='post-interactions'>
-                        <span>Comments: <%= post.comments_counter %>,</span>
-                        <span>Likes: <%= post.likes_counter %></span>
-                    </div>
-                </div>
-                <h3>Comments:</h3>
-                <% recent_comments = post.recent_comments.includes(:author) %>
-                <% recent_comments.each do |comment| %>
-                <div class="post-comments">
-                    <span><%= comment.author.name %>:</span>
-                    <span><%= comment.text %></span>
-                </div>
-                <% end %>
-            </div>
-        </a>
-    <% end %>
-    <nav class="">
-        <ul class="pagination justify-content-center">
-            <% (1..@total_pages).each do |page| %>
-                <li class="page-item"><a class="" href="/users/<%= @author.id %>/posts?page=<%= page %>"><%= page %></a></li>
-            <% end %>
-        </ul>
-    </nav>
-</ul>
-</main>
+    </div>
+
+    <ul class='posts'>
+        <% @post.posts.each do |item| %>
+          <li class='post'>
+            <p>Post #<%= item.id%></p>
+            <p class="pst">
+                 <%= link_to item.title , "posts/#{item.id}" %>
+            </p>
+            <p><%= item.text %></p>
+            <p class='details'>
+                <span>comments: <%= item.comments_counter %></span>, 
+                <span>Likes: <%= item.likes_counter %> </span>
+            </p>
+          </li>
+          <div class='five-comments'>
+
+            <% item.five_recent_comments.each do |item| %>
+               <p>User : <%= item.author.name %></p>
+               <p class='cmt-text'><%= item.text %></p>
+             <% end %>
+
+             <div class='cmt'>
+                <P>
+                <%= link_to 'Add a comment' , "/users/#{@post.id}/posts/#{item.id}/comments/new" %>
+                </P>
+                <P class="likes">
+                  <%= link_to 'Like' , "/users/#{@post.id}/posts/#{item.id}/likes/" %>
+                </P>
+             </div>
+          </div>
+        <% end %>
+    </ul>
+    <button class='btn'>
+        <%= link_to 'Pagination' , "/users/#{@post.id}" %>
+    </button>
+</div>

@@ -1,0 +1,158 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.name-img {
+  width: 80vw;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+li {
+  list-style: none;
+}
+
+.name-img .cover-img {
+  border: 1px solid black;
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+}
+
+.name-img .name {
+  border: 1px solid black;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-weight: bolder;
+}
+
+.name-img .comments-counter {
+  align-self: flex-end;
+  justify-self: flex-start;
+}
+
+a {
+  color: black;
+}
+
+.bio {
+  border: 1px solid black;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  width: 80vw;
+}
+
+.spec-user,
+.all-posts {
+  font-weight: bolder;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.post {
+  border: 1px solid black;
+  margin-top: 15px;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 80vw;
+}
+
+.details {
+  align-self: flex-end;
+  justify-self: flex-end;
+}
+
+.spec-user .nmb-posts {
+  align-self: flex-end;
+  justify-self: flex-end;
+}
+
+.all-posts {
+  width: 80vw;
+  font-weight: bolder;
+}
+
+.five-comments {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid black;
+  font-weight: bolder;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 80vw;
+}
+
+.btn {
+  padding: 10px;
+}
+
+.btn a {
+  text-decoration: none;
+  color: black;
+  font-weight: bolder;
+}
+
+.last-user {
+  font-weight: bold;
+}
+
+form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  gap: 10px;
+}
+
+textarea {
+  padding: 10px;
+  height: 200px;
+}
+
+#title {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+input {
+  padding: 10px;
+}
+
+.new-post {
+  align-self: self-start;
+  justify-self: self-start;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.cmt {
+  border: 1px solid black;
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

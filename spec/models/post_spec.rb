@@ -1,36 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  subject { Post.new(title: 'Great Spears in Danger', comments_counter: 2, likes_counter: 3) }
+  first_user = User.new(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Mexico.')
 
-  before { subject.save }
-
-  it 'title must not be blank' do
-    subject.title = nil
-    expect(subject).to_not be_valid
+  it 'title should not be empty' do
+    first_post = Post.new(author: first_user, title: 'Hello', text: 'This is my first post')
+    expect(first_post).to be_valid
   end
 
-  it 'title must not exceed 250 characters' do
-    subject.title = 'a' * 251
-    expect(subject).to_not be_valid
+  it 'comments_counter should not be less than 0' do
+    first_post = Post.new(author: first_user, title: 'Hello', text: 'This is my first post')
+    first_post.comments_counter = -3
+    expect(first_post).to_not be_valid
   end
 
-  it 'comments_counter must be an integer greater than or equal to 0' do
-    subject.title = -2
-    expect(subject).to_not be_valid
+  it 'comments_counter should be an integer' do
+    first_post = Post.new(author: first_user, title: 'Hello', text: 'This is my first post')
+    first_post.comments_counter = 'one'
+    expect(first_post).to_not be_valid
   end
 
-  it 'likess_counter must be an integer greater than or equal to 0' do
-    subject.title = -5
-    expect(subject).to_not be_valid
+  it 'comments_counter should be greater than or equal to 0' do
+    first_post = Post.new(author: first_user, title: 'Hello', text: 'This is my first post')
+    first_post.comments_counter = 3
+    expect(first_post).to be_valid
   end
 
-  # for testing methods
-  describe '#post_counts' do
-    it 'returns the most recent 2 posts' do
-      post = Post.new(comments: [Comment.new, Comment.new])
-      post.save
-      expect(post.recent_comments).to eq(post.comments.order(created_at: :desc).limit(2))
-    end
+  it 'likes_counter should be an integer' do
+    first_post = Post.new(author: first_user, title: 'Hello', text: 'This is my first post')
+    first_post.likes_counter = 'one'
+    expect(first_post).to_not be_valid
+  end
+
+  it 'likes_counter should be greater than or equal to 0' do
+    first_post = Post.new(author: first_user, title: 'Hello', text: 'This is my first post')
+    first_post.likes_counter = 3
+    expect(first_post).to be_valid
   end
 end

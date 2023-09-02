@@ -1,39 +1,79 @@
 require 'rails_helper'
 
-RSpec.feature 'Post Show', type: :feature do
-  let(:user) { User.create(name: 'Tom', photo: 'https://www.kasandbox.org/programming-images/avatars/leaf-blue.png', bio: 'He is a good programmer') }
-  let!(:post) { Post.create(author: user, title: "first post's title", text: 'first text') }
-  let!(:post2) { Post.create(author: user, title: 'second post', text: 'second text') }
-  let!(:post3) { Post.create(author: user, title: 'third post', text: '3 text') }
-  let!(:post4) { Post.create(author: user, title: '4 post', text: '4 text') }
-  let!(:comment1) { Comment.create(author: user, post: post, text: 'first comment') }
-  let!(:comment2) { Comment.create(author: user, post: post2, text: 'second comment') }
-  let!(:comment3) { Comment.create(author: user, post: post3, text: 'third comment') }
-  let!(:like1) { Like.create(author: user, post: post) }
+RSpec.describe 'post show page' do
+  fake_user = User.create(name: 'Kena', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Mexico.')
+  first_post = Post.create(author: fake_user, title: 'Hello', text: 'This is my first post')
+  second_post = Post.create(author: fake_user, title: 'Hello', text: 'This is my first post')
+  Post.create(author: fake_user, title: 'Hello', text: 'This is my first post')
+  first_comment = Comment.create('text' => 'Bonjour les freres', 'author' => fake_user, 'post' => first_post)
+  Comment.create('text' => 'Bonjour les freres', 'author' => fake_user, 'post' => second_post)
 
-  scenario 'see the title of the post and who wrote it and the interactions' do
-    visit user_post_path(user, post)
-    expect(page).to have_content("first post's title")
-    expect(page).to have_content('by Tom')
-    expect(page).to have_content('Comments: 3')
-    expect(page).to have_content('Likes: 1')
+  it 'shows the user\'s profile picture' do
+    visit "/users/#{fake_user.id}/posts"
+    users = page.all('.profile-piture')
+    users.each do |profile_picture|
+      expect(profile_picture).to have_css('img')
+    end
   end
 
-  scenario "see the post's body" do
-    visit user_post_path(user, post)
-    expect(page).to have_content('first text')
+  it 'shows the user\'s username' do
+    visit "/users/#{fake_user.id}/posts"
+
+    expect(page).to have_content(fake_user.name)
   end
 
-  scenario 'see the username and comment of each post' do
-    user2 = User.create(name: 'Ali')
-    user3 = User.create(name: 'Salim')
-    Comment.create(author: user2, post: post, text: 'fifth comment')
-    Comment.create(author: user3, post: post, text: 'sixth comment')
+  it 'shows the number of posts the user has written' do
+    visit "/users/#{fake_user.id}/posts"
 
-    visit user_post_path(user, post)
+    expect(page).to have_content('Number of posts: 3')
+  end
 
-    expect(page).to have_content('Tom')
-    expect(page).to have_content('Salim')
-    expect(page).to have_content('sixth comment')
+  it 'shows a posts title' do
+    visit "/users/#{fake_user.id}/posts"
+
+    post = page.all('.post').first
+    expect(post).to have_content(first_post.title)
+  end
+
+  it 'shows some of the post\'s body' do
+    visit "/users/#{fake_user.id}/posts"
+
+    post = page.all('.post').first
+    expect(post).to have_content(first_post.text)
+  end
+
+  it 'shows the first comments on a post' do
+    visit "/users/#{fake_user.id}/posts"
+    expect(page).to have_content(first_comment.text)
+  end
+
+  it 'shows how many comments a post has' do
+    visit "/users/#{fake_user.id}/posts"
+    expect(page).to have_content(second_post.comments_counter)
+  end
+
+  it 'shows how many likes a post has' do
+    visit "/users/#{fake_user.id}/posts"
+    expect(page).to have_content(first_post.likes_counter)
+  end
+
+  it 'shows a section for pagination if there are more posts than fit on the view' do
+    visit "/users/#{fake_user.id}/posts"
+
+    posts = page.all('.post')
+    if posts.length > 3
+      expect(page).to have_css('ul.pagination')
+    else
+      expect(page).not_to have_css('ul.pagination')
+    end
+  end
+
+  it 'redirects me to the post show page when I click on a post' do
+    visit "/users/#{fake_user.id}/posts"
+
+    post = page.all('.pst').first
+    post.click
+
+    expect(page).to have_current_path("/users/#{fake_user.id}/posts")
   end
 end

@@ -1,39 +1,25 @@
-# require 'rails_helper'
+require 'rails_helper'
 
-# RSpec.describe 'Posts', type: :request do
-#   # for the index template
-#   describe 'GET /users/:user/posts' do
-#     it 'the response status is correct' do
-#       get '/users/1/posts'
-#       expect(response.status).to eq(200)
-#     end
+describe 'POSTS CONTROLLER' do
+  describe 'get index' do
+    it 'returns http succes' do
+      get '/users/1/posts'
+      expect(response).to have_http_status(:success)
+    end
 
-#     it 'renders the correct index page' do
-#       get '/users/1/posts'
-#       expect(response).to render_template(:index)
-#     end
+    it 'return the correct template' do
+      get '/users/1/posts'
+      expect(response).to render_template('index')
+    end
 
-#     it 'includes the correct placeholder text' do
-#       get '/users/1/posts'
-#       expect(response.body).to include('Here is a list of posts for a given user 1')
-#     end
-#   end
+    it 'return http success for /users/:user_id/posts/:id' do
+      get '/users/1/posts/1'
+      expect(response).to have_http_status(:success)
+    end
 
-#   # for the show template
-#   describe 'GET /users/:id/posts/:post_id' do
-#     it 'the response status is correct' do
-#       get '/users/1/posts/2'
-#       expect(response.status).to eq(200)
-#     end
-
-#     it 'renders the correct show template' do
-#       get '/users/1/posts/3'
-#       expect(response.body).to render_template(:show)
-#     end
-
-#     it 'includes the correct placeholder text' do
-#       get '/users/1/posts'
-#       expect(response.body).to include('Here is a list of posts for a given user 1')
-#     end
-#   end
-# end
+    it 'return the correct template' do
+      get '/users/1/posts/1'
+      expect(response).to render_template('show')
+    end
+  end
+end

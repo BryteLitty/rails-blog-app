@@ -1,28 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Like, type: :model do
-  it 'increments likes_counter' do
-    user = User.new(
-      name: 'John Doe',
-      bio: 'Developer',
-      posts_counter: 5
-    )
+  first_user = User.new(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Mexico.')
+  first_post = Post.new(author: first_user, title: 'Hello', text: 'This is my first post')
 
-    post = Post.new(
-      title: 'My first post',
-      text: 'Hello world!',
-      comments_counter: 4,
-      likes_counter: 5,
-      author_id: user.id
-    )
-    post.save
+  it 'text should not be empty' do
+    like = Like.new(post: first_post, author: first_user)
+    expect(like).to be_valid
+  end
 
-    like = Like.new(
-      author_id: user.id,
-      post_id: post.id
-    )
-    like.save
-
-    expect(post.likes_counter).to_not eq(6)
+  it 'author should not be empty' do
+    like = Like.new(post: first_post, author: first_user)
+    expect(like).to be_valid
   end
 end

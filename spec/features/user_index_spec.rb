@@ -1,28 +1,45 @@
 require 'rails_helper'
-RSpec.feature 'User Index', type: :feature do
-  scenario 'visiting the user index page' do
-    User.create(name: 'Tom', photo: 'https://www.kasandbox.org/programming-images/avatars/leaf-blue.png')
-    User.create(name: 'Ali', photo: 'https://www.kasandbox.org/programming-images/avatars/leaf-blue.png')
-    visit users_path
-    expect(page).to have_content('Tom')
-    expect(page).to have_content('Ali')
-    expect(page).to have_css("img[alt='Tom']", count: 1)
-    expect(page).to have_css("img[alt='Ali']", count: 1)
+
+RSpec.describe 'User index page' do
+  fake_user = User.create(name: 'Kena', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Mexico.')
+  first_post = Post.create(author: fake_user, title: 'Hello', text: 'This is my first post')
+  second_post = Post.create(author: fake_user, title: 'Hello', text: 'This is my first post')
+  Post.create(author: fake_user, title: 'Hello', text: 'This is my first post')
+  Comment.create('text' => 'Bonjour les freres', 'author' => fake_user, 'post' => first_post)
+  Comment.create('text' => 'Bonjour les freres', 'author' => fake_user, 'post' => second_post)
+
+  it 'shows the post\'s title' do
+    visit "/users/#{fake_user.id}/posts/#{first_post.id}"
+    expect(page).to have_content(first_post.title)
   end
-  scenario 'visiting the user index page, you see the number of posts each user has written..' do
-    user1 = User.create(name: 'Tom')
-    User.create(name: 'Ali')
-    Post.create(author: user1, title: 'first post')
-    Post.create(author: user1, title: 'second post')
-    Post.create(author: user1, title: 'third post')
-    visit users_path
-    expect(page).to have_content('3')
-    expect(page).to have_content('0')
+
+  it 'shows who wrote the post' do
+    visit "/users/#{fake_user.id}/posts/#{first_post.id}"
+    expect(page).to have_content(first_post.author.name)
   end
-  scenario 'clicking on a user redirects to their show page' do
-    user = User.create(name: 'Salim')
-    visit users_path
-    click_link 'Salim'
-    expect(page).to have_current_path(user_posts_path(user))
+
+  it 'shows how many comments it has' do
+    visit "/users/#{fake_user.id}/posts/#{first_post.id}"
+    expect(page).to have_content('comments: 1')
+  end
+
+  it 'shows how many likes it has' do
+    visit "/users/#{fake_user.id}/posts/#{first_post.id}"
+    expect(page).to have_content('Likes: 0')
+  end
+
+  it 'shows the post body' do
+    visit "/users/#{fake_user.id}/posts/#{first_post.id}"
+    expect(page).to have_content(first_post.text)
+  end
+
+  it 'shows the username of each commentor' do
+    visit "/users/#{fake_user.id}/posts/#{first_post.id}"
+    expect(page).to have_content('Kena')
+  end
+
+  it 'shows the comment each commentor left' do
+    visit "/users/#{fake_user.id}/posts/#{first_post.id}"
+    expect(page).to have_content('Bonjour les freres')
   end
 end

@@ -1,57 +1,27 @@
-# require 'rails_helper'
-
-# RSpec.describe User, type: :model do
-#   subject { User.new(name: 'Bright', posts_counter: 1) }
-
-#   before { subject.save }
-
-#   it 'name should be present' do
-#     subject.name = nil
-#     expect(subject).to_not be_valid
-#   end
-
-#   it 'post counter must be an integer greater than or equal to zero' do
-#     subject.posts_counter = -1
-#     expect(subject).to_not be_valid
-#   end
-
-#   # for testing methods
-#   describe '#recent_posts' do
-#     it 'returns the most recent 3 posts' do
-#       user = User.new(name: 'Kuler Mills')
-#       post1 = Post.new(title: 'Post 1', author: user)
-#       post2 = Post.new(title: 'Post 2', author: user)
-#       post3 = Post.new(title: 'Post 3', author: user)
-#       expect(user.recent_posts.limit(3).to_a).to eq([])
-#     end
-#   end
-# end
-
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject { User.new(name: 'Bright', posts_counter: 1) }
-
-  before { subject.save }
-
-  it 'name should be present' do
-    subject.name = nil
-    expect(subject).to_not be_valid
+  it 'name should not be empty' do
+    user = User.new(name: 'Daniel', photo: 'https://source.unsplash.com/random', bio: 'User bio')
+    user.name = nil
+    expect(user).to_not be_valid
   end
 
-  it 'post counter must be an integer greater than or equal to zero' do
-    subject.posts_counter = -1
-    expect(subject).to_not be_valid
+  it 'posts_counter should not be less than 0' do
+    user = User.new(name: 'Daniel', photo: 'https://source.unsplash.com/random', bio: 'User bio')
+    user.posts_counter = -1
+    expect(user).to_not be_valid
   end
 
-  # for testing methods
-  describe '#recent_posts' do
-    it 'returns the most recent 3 posts' do
-      user = User.new(name: 'Kuler Mills')
-      Post.new(title: 'Post 1', author: user)
-      Post.new(title: 'Post 2', author: user)
-      Post.new(title: 'Post 3', author: user)
-      expect(user.recent_posts.limit(3).to_a).to eq([])
-    end
+  it 'posts_counter should be greater than or equal to 0' do
+    user = User.new(name: 'Daniel', photo: 'https://source.unsplash.com/random', bio: 'User bio')
+    user.posts_counter = 3
+    expect(user).to be_valid
+  end
+
+  it 'posts_counter should be an integer' do
+    user = User.new(name: 'Daniel', photo: 'https://source.unsplash.com/random', bio: 'User bio')
+    user.posts_counter = 'one'
+    expect(user).to_not be_valid
   end
 end

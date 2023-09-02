@@ -1,12 +1,17 @@
-<main>
-<h1>Users</h1>
-<ul>
-  <% @users.each do |user| %>
-    <a href="<%= user_posts_path(user) %>">
-      <div class="user-box">
-        <%= render partial: 'shared/user_details', locals: { user: user } %>
-      </div>
-    </a>
-  <% end %>
-</ul>
-</main>
+<div>
+    <ul>
+        <%@user.each do |item| %>
+          <li>
+            <div class= 'name-img'>
+                <img src=<%=item.photo%> alt='Profile' class = 'cover-img'  />
+                <div class = 'name' >
+                     
+                    <p class='author-name' id='username'><%= link_to item.name , user_path(item.id) %></p>
+                    <p  class='comments-counter' >Number of posts: <%= item.posts_counter%></p>
+                </div>
+            </div>
+          </li>
+        <% end %>
+    </ul>
+</div>
+
