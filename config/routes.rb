@@ -1,27 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users , path: '/', path_names: { sign_in: 'login', sign_up: 'sign_up', sign_out: 'logout'}
 
-  # Defines the root path route ("/")
   root 'users#index'
-
-  resources :users do
+  resources :users, only: [:index, :show] do
     resources :posts do
-      member do
-        post 'like'
-        delete 'unlike'
-      end
-      resources :comments
+      resources :comments , :likes
     end
-  end
-
-  namespace :api do
-    namespace :api do
-      resources :users, only: [:index] do
-        resources :posts, only: [:index] do
-          resources :comments, only: [:index, :create]
-        end
-      end
-    end
-  end
+  end  
 end
