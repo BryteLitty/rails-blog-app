@@ -14,15 +14,18 @@ RSpec.feature 'User Show', type: :feature do
     expect(page).to have_css("img[alt='Tom']", count: 1)
   end
 
-  scenario 'visiting the user show page, you see the number of posts the user has written..' do
+  scenario 'visiting the user show page, you see the number of posts the user has written' do
     visit user_path(user)
 
     expect(page).to have_content('4 posts')
   end
 
-  scenario 'visiting the user show page, you see the 3 most recent post and bio the user has written..' do
+  scenario 'visiting the user show page, you see the 3 most recent posts and the user bio' do
     visit user_path(user)
     expect(page).to have_content('He is a good programmer')
+    expect(page).to have_content('second post')
+    expect(page).to have_content('third post')
+    expect(page).to have_content('4 post')
     expect(page).not_to have_content('first text')
   end
 
