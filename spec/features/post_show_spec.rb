@@ -11,7 +11,7 @@ RSpec.feature 'Post Show', type: :feature do
   let!(:comment3) { Comment.create(author: user, post: post3, text: 'third comment') }
   let!(:like1) { Like.create(author: user, post: post) }
 
-  scenario 'see the title of the post and who wrote it and the interactions' do
+  scenario 'see the title of the post, the author, and the interactions' do
     visit user_post_path(user, post)
     expect(page).to have_content("first post's title")
     expect(page).to have_content('by Tom')
